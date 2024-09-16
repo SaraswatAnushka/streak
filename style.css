@@ -1,0 +1,83 @@
+/* Applying a radial gradient to the entire background */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 54em;
+    background: linear-gradient(to bottom right, #E1AFD1, #FFE6E6); /* Linear gradient */
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    background-size: cover; /* Ensures the gradient covers the entire viewport */
+}
+ 
+
+/* Styling the table */
+table {
+    width: 90%;
+    height: 80%;
+    border-collapse: collapse;
+    background-color: white; /* Ensuring the table background is white */
+    margin: 20px 0;
+    position: relative;
+    left : 50px;
+
+}
+
+th, td {
+    width: 14.28%; /* 7 columns for days of the week */
+    padding: 20px;
+    border: 3px solid white;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    height: 80px;
+    background-color: white; /* Table cells are white */
+}
+
+td.selected {
+    background-color: #7469B6; /* Light green background for selected cells */
+    color: white; /* Optional: Change text color for visibility */
+}
+
+th {
+    background-color: pink; /* Header background color */
+}
+
+/* Styling the month name */
+.month-name {
+    text-align: center;
+    font-size: 24px;
+    padding: 10px;
+}
+
+/* Styling navigation buttons */
+.navigation {
+    text-align: center;
+    margin: 20px;
+    /* background-color: #7469B6; */
+}
+
+.nav-btn {
+    cursor: pointer;
+    font-size: 18px;
+    padding: 10px 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    margin: 0 5px;
+    border-radius: 2em;
+}
+
+.nav-btn:hover {
+    background-color: #ddd;
+    border-radius: 2em;
+}
+
+/* Calendar container centering */
+#calendar-container {
+    width: 80%;
+    left: 10em;
+    position: absolute;
+    /* background-color: red; */
+}

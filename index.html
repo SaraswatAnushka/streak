@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Interactive Calendar with Color Change</title>
+
+</head>
+<body>
+    <div class="navigation">
+        <button class="nav-btn" id="prev-month">◀ Previous</button>
+        <span id="month-year"></span>
+        <button class="nav-btn" id="next-month">Next ▶</button>
+    </div>
+    
+    <div id="calendar-container"></div>
+
+    <script>
+        const months = [
+            "January", "February", "March", "April", "May", "June", 
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        let currentMonth = new Date().getMonth(); // Current month
+        let currentYear = new Date().getFullYear(); // Current year
+
+        function createCalendar(year, month) {
+            const calendarContainer = document.getElementById('calendar-container');
+            calendarContainer.innerHTML = ''; // Clear previous calendar
+
+            const monthTable = document.createElement('table');
+            const monthName = document.getElementById('month-year');
+            monthName.innerText = `${months[month]} ${year}`;
+            monthTable.appendChild(createTableHeader());
+            monthTable.appendChild(createMonthDays(year, month));
+
+            calendarContainer.appendChild(monthTable);
+        }
+
+        function createTableHeader() {
+            const headerRow = document.createElement('tr');
+            const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+            for (let day of days) {
+                const th = document.createElement('th');
+                th.innerText = day;
+                headerRow.appendChild(th);
+            }
+            return headerRow;
+        }
+
+        function createMonthDays(year, month) {
+            const firstDay = new Date(year, month, 1).getDay(); // Starting day of the month
+            const daysInMonth = new Date(year, month + 1, 0).getDate(); // Days in this month
+            const row = document.createElement('tr');
+
+            let currentDay = 1;
+            let dayCell;
+
+            // Fill the empty days before the first day of the month
+            for (let i = 0; i < firstDay; i++) {
+                dayCell = document.createElement('td');
+                row.appendChild(dayCell);
+            }
+
+            // Fill the days of the month
+            for (let day = firstDay; day < 7; day++) {
+                if (currentDay <= daysInMonth) {
+                    dayCell = createDayCell(currentDay);
+                    row.appendChild(dayCell);
+                    currentDay++;
+                }
+            }
+
+            const tableFragment = document.createDocumentFragment();
+            tableFragment.appendChild(row);
+
+            while (currentDay <= daysInMonth) {
+                const newRow = document.createElement('tr');
+                for (let i = 0; i < 7 && currentDay <= daysInMonth; i++) {
+                    dayCell = createDayCell(currentDay);
+                    newRow.appendChild(dayCell);
+                    currentDay++;
+                }
+                tableFragment.appendChild(newRow);
+            }
+
+            return tableFragment;
+        }
+
+        function createDayCell(day) {
+            const dayCell = document.createElement('td');
+            dayCell.innerText = day;
+
+            dayCell.addEventListener('click', function() {
+                dayCell.classList.toggle('selected'); // Toggle the selected class
+            });
+
+            return dayCell;
+        }
+
+        // Navigate to the previous or next month
+        function changeMonth(step) {
+            currentMonth += step;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            } else if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            createCalendar(currentYear, currentMonth);
+        }
+
+        // Initial calendar for the current month
+        createCalendar(currentYear, currentMonth);
+
+        // Event listeners for navigation
+        document.getElementById('prev-month').addEventListener('click', function() {
+            changeMonth(-1);
+        });
+        document.getElementById('next-month').addEventListener('click', function() {
+            changeMonth(1);
+        });
+    </script>
+</body>
+</html>
